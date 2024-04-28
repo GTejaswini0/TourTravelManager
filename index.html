@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="tourApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Travel Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;800;900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="TripController">
+    <div class="container">
+        <h1>Tour Travel Manager</h1>
+        <div id="addTrip">
+            <input type="text" ng-model="newTrip.destination" placeholder="Enter destination...">
+            <input type="text" ng-model="newTrip.date" placeholder="dd-mm-yyyy">
+            <input type="text" ng-model="newTrip.location" placeholder="Enter location...">
+            <input type="text" ng-model="newTrip.duration" placeholder="Enter duration...">
+            <input type="text" ng-model="newTrip.budget" placeholder="Enter budget...">
+            <button ng-click="addTrip()">Add Trip</button>
+        </div>
+
+        <div id="controls">
+            <input type="text" ng-model="filterInput" placeholder="Filter trips...">
+            <button ng-click="filterTrips()">Filter</button>
+            <button ng-click="deleteAll()">Delete All</button>
+        </div>
+        <table id="trip-table">
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Duration</th>
+                    <th>Budget</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="trip in trips | filter: filterInput">
+                    <td>{{ trip.destination }}</td>
+                    <td>{{ trip.date }}</td>
+                    <td>{{ trip.location }}</td>
+                    <td>{{ trip.duration }}</td>
+                    <td>{{ trip.budget }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        var app = angular.module('tourApp', []);
+        
+        app.controller('TripController', function($scope) {
+            $scope.trips = [];
+            $scope.newTrip = {};
+
+            $scope.addTrip = function() {
+                if ($scope.newTrip.destination && $scope.newTrip.date && $scope.newTrip.location && $scope.newTrip.duration && $scope.newTrip.budget) {
+                    $scope.trips.push(angular.copy($scope.newTrip));
+                    $scope.newTrip = {};
+                } else {
+                    alert("Please enter all fields!");
+                }
+            };
+
+            $scope.filterTrips = function() {
+                // Filter trips based on filterInput
+            };
+
+            $scope.deleteAll = function() {
+                // Delete all trips
+            };
+        });
+    </script>
+</body>
+</html>
